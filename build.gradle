@@ -133,9 +133,14 @@ spotbugs {
     showProgress = true
 }
 
+task prePushChecks {
+    group = 'verification'
+    description = 'Run formatting and quality checks before push'
+    dependsOn 'spotlessApply', 'spotlessCheck', 'checkstyleMain', 'pmdMain', 'spotbugsMain'
+}
 
 gitHooks {
     hooks = [
-            'pre-push': 'gradle spotlessApply && gradle spotlessCheck checkstyleMain pmdMain spotbugsMain',
+            'pre-commit': 'prePushChecks'
     ]
 }
