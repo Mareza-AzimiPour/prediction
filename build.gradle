@@ -133,7 +133,7 @@ spotbugs {
     showProgress = true
 }
 
-task prePushChecks {
+tasks.register('prePushChecks') {
     group = 'verification'
     description = 'Run formatting and quality checks before push'
     dependsOn 'spotlessApply', 'spotlessCheck', 'checkstyleMain', 'pmdMain', 'spotbugsMain'
