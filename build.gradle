@@ -133,6 +133,15 @@ spotbugs {
     showProgress = true
 }
 
+tasks.register('stageAfterSpotless') {
+    dependsOn 'spotlessApply'
+    doLast {
+        exec {
+            commandLine 'git', 'add', '.'
+        }
+    }
+}
+
 tasks.register('prePushChecks') {
     group = 'verification'
     description = 'Run formatting and quality checks before push'
