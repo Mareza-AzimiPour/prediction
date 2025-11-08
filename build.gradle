@@ -133,13 +133,14 @@ spotbugs {
     showProgress = true
 }
 
-tasks.register('prePushChecks') {
+tasks.register('preCommitChecks') {
     group = 'verification'
     description = 'Run formatting and quality checks before push'
 
     dependsOn 'spotlessApply', 'spotlessCheck', 'checkstyleMain', 'pmdMain', 'spotbugsMain'
 
     doLast {
+        //noinspection GrDeprecatedAPIUsage
         exec {
             commandLine 'git', 'add', '-A'
         }
@@ -148,6 +149,6 @@ tasks.register('prePushChecks') {
 
 gitHooks {
     hooks = [
-            'pre-commit': 'prePushChecks'
+            'pre-commit': 'preCommitChecks'
     ]
 }
