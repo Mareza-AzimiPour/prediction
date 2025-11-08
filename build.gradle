@@ -145,11 +145,19 @@ tasks.register('stageAfterSpotless') {
 tasks.register('prePushChecks') {
     group = 'verification'
     description = 'Run formatting and quality checks before push'
-    dependsOn 'spotlessApply', 'spotlessCheck', 'checkstyleMain', 'pmdMain', 'spotbugsMain'
+    dependsOn 'spotlessApply', 'gitAdd', 'spotlessCheck', 'checkstyleMain', 'pmdMain', 'spotbugsMain'
 }
 
 gitHooks {
     hooks = [
             'pre-commit': 'prePushChecks'
     ]
+}
+
+tasks.register('gitAdd') {
+    doLast {
+        exec {
+            commandLine 'git', 'add', '-A'
+        }
+    }
 }
