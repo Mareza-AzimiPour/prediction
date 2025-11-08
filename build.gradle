@@ -145,7 +145,17 @@ tasks.register('stageAfterSpotless') {
 tasks.register('prePushChecks') {
     group = 'verification'
     description = 'Run formatting and quality checks before push'
-    dependsOn 'spotlessApply', 'gitAdd', 'spotlessCheck', 'checkstyleMain', 'pmdMain', 'spotbugsMain'
+//    dependsOn 'spotlessApply', 'gitAdd', 'spotlessCheck', 'checkstyleMain', 'pmdMain', 'spotbugsMain'
+
+    // ترتیب اجرای taskها واقعی
+    dependsOn 'spotlessApply', 'spotlessCheck', 'checkstyleMain', 'pmdMain', 'spotbugsMain'
+
+    doLast {
+        // بعد از اجرای همه checkها، فایل‌ها را stage کن
+        exec {
+            commandLine 'git', 'add', '-A'
+        }
+    }
 }
 
 gitHooks {
