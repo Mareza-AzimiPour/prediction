@@ -1,9 +1,19 @@
 server:
-  port: 8081
+  port: 8089
+
 spring:
   application:
     name: prediction
-
+  main:
+    aot:
+      enabled: true
+      allow-bean-definition-overriding: true
+  autoconfigure:
+    exclude:
+      - org.springframework.modulith.runtime.autoconfigure.SpringModulithRuntimeAutoConfiguration
+  modulith:
+    runtime:
+      enabled: false
   datasource:
     url: jdbc:h2:mem:poma_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     driver-class-name: org.h2.Driver
@@ -23,3 +33,9 @@ spring:
       path: /h2-console
   flyway:
     enabled: false
+
+  management:
+    metrics:
+      export:
+        simple:
+          enabled: true
